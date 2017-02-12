@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello WebSocket</title>
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
+    enabled. Please enable
+    Javascript and reload this page!</h2></noscript>
+<div class="container" id="app">
+    <div class="row">
+        <div id="weatherDiv" class="col-md-6">
+            <table class="table text-center borderless">
+                <thead>
+                    <tr>
+                        <td colspan="3"><div class="text-center" v-if="weather.currentWeather">{{ weather.currentWeather.temperature }} / <b>{{ weather.currentWeather.apparentTemperature }}</b></div></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><div class="text-center" v-if="weather.currentWeather">{{ weather.currentWeather.summary }}</div></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="hourlyWeather in hourlyWeather">
+                        <td>{{ hourlyWeather.hourAsString }}</td>
+                        <td>{{ hourlyWeather.temperature }} / <b>{{ hourlyWeather.apparentTemperature }}</b></td>
+                        <td><canvas :id="hourlyWeather.icon" width="64" height="64"></canvas></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+
+        </div>
+    </div>
+    <script src="https://rawgithub.com/darkskyapp/skycons/master/skycons.js"></script>
+    <script src="/vueController.js"></script>
+</div>
+</body>
+</html>
