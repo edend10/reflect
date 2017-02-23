@@ -16,16 +16,17 @@ public class DarkSkyWeatherClientImpl implements WeatherClient {
 
     private static final String HOST = "https://api.darksky.net";
     private static final String ENDPOINT = "forecast";
-    private static final String API_KEY = "1b058855981266866ee75e6fa38a3f84";
     private static final String PARAMS = "exclude=flags,minutely&units=si";
     private static final String URL_PATTERN = "%s/%s/%s/%s?%s";
 
     private final RestTemplate restTemplate;
     private final ObjectMapper mapper;
+    private final String apiKey;
 
-    public DarkSkyWeatherClientImpl(RestTemplate restTemplate, ObjectMapper mapper) {
+    public DarkSkyWeatherClientImpl(RestTemplate restTemplate, ObjectMapper mapper, String apiKey) {
         this.restTemplate = restTemplate;
         this.mapper = mapper;
+        this.apiKey = apiKey;
     }
 
     public DarkSkyWeatherResponse getForecastForLatLong(String latLong) {
@@ -42,6 +43,6 @@ public class DarkSkyWeatherClientImpl implements WeatherClient {
     }
 
     private String buildUrl(String latLong) {
-        return String.format(URL_PATTERN, HOST, ENDPOINT, API_KEY, latLong, PARAMS);
+        return String.format(URL_PATTERN, HOST, ENDPOINT, apiKey, latLong, PARAMS);
     }
 }

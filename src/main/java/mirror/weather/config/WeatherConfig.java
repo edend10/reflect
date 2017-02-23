@@ -17,12 +17,16 @@ import org.springframework.web.client.RestTemplate;
 
 @SpringBootConfiguration
 @PropertySource("classpath:reflect.properties")
+@PropertySource("classpath:reflect-key.properties")
 public class WeatherConfig {
     @Value("${modules.timezone}")
     private String timezone;
 
     @Value("${modules.weather.latlong}")
     private String latLong;
+
+    @Value("${weather.apikey}")
+    private String weatherApiKey;
 
     @Bean
     public WeatherController weatherController(WeatherService weatherService) {
@@ -37,7 +41,7 @@ public class WeatherConfig {
 
     @Bean
     public WeatherClient weatherClient(RestTemplate restTemplate, ObjectMapper objectMapper) {
-        return new DarkSkyWeatherClientImpl(restTemplate, objectMapper);
+        return new DarkSkyWeatherClientImpl(restTemplate, objectMapper, weatherApiKey);
     }
 
     @Bean
