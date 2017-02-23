@@ -60,12 +60,21 @@ public class DarkSkyWeatherResponseConverterImpl implements WeatherResponseConve
         dailyWeather.setIcon(darkSkyDailyWeather.getIcon());
         dailyWeather.setTemperatureMin(Math.round(darkSkyDailyWeather.getTemperatureMin()));
         dailyWeather.setTemperatureMax(Math.round(darkSkyDailyWeather.getTemperatureMax()));
+        dailyWeather.setDayAsString(toDayAsString(darkSkyDailyWeather.getTime()));
         return dailyWeather;
     }
 
+    private String toDayAsString(long timestamp) {
+        return timestampToFormattedString(timestamp, WeatherService.DAY_FORMAT);
+    }
+
     private String toHourAsString(long timestamp) {
+        return timestampToFormattedString(timestamp, WeatherService.HOUR_FORMAT);
+    }
+
+    private String timestampToFormattedString(long timestamp, String format) {
         Instant instant = Instant.ofEpochSecond(timestamp);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(WeatherService.HOUR_FORMAT);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
         ZonedDateTime zonedTime = ZonedDateTime.ofInstant(instant, ZoneId.of(timezone));
 
         return formatter.format(zonedTime);

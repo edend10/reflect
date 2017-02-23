@@ -1,7 +1,6 @@
 package mirror.weather.module;
 
 import mirror.modules.generic.AbstractMirrorModule;
-import mirror.service.AbstractMirrorService;
 import mirror.weather.service.WeatherService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +11,8 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 public class WeatherModule extends AbstractMirrorModule {
+
+    private final static String GET_WEATHER_ENDPOINT = "get";
 
     private final static Logger LOGGER = LoggerFactory.getLogger(WeatherModule.class);
     private final WeatherService weatherService;
@@ -28,7 +29,7 @@ public class WeatherModule extends AbstractMirrorModule {
             public void run() {
                 try {
                     LOGGER.debug("Fetching and pushing weather response from weather service...");
-                    webSocketMessenger.convertAndSend(getEndpoint(), weatherService.getWeather());
+                    sendMessage(webSocketMessenger, getEndpoint(GET_WEATHER_ENDPOINT), weatherService::getWeather);
                 } catch (Exception e) {
                     LOGGER.error("Weather module failed:", e);
                 }

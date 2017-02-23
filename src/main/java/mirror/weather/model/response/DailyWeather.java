@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class DailyWeather {
     private long time;
+    private String dayAsString;
     private String summary;
     private String icon;
     private int temperatureMin;
@@ -49,9 +50,17 @@ public class DailyWeather {
         this.temperatureMin = temperatureMin;
     }
 
+    public String getDayAsString() {
+        return dayAsString;
+    }
+
+    public void setDayAsString(String dayAsString) {
+        this.dayAsString = dayAsString;
+    }
+
     @Override
     public int hashCode() {
-        return Objects.hash(time, temperatureMin, temperatureMax, summary, icon);
+        return Objects.hash(time, temperatureMin, temperatureMax, summary, icon, dayAsString);
     }
 
     @Override
@@ -64,6 +73,7 @@ public class DailyWeather {
                 && Objects.equals(this.temperatureMin, weatherObj.temperatureMin)
                 && Objects.equals(this.temperatureMax, weatherObj.temperatureMax)
                 && Objects.equals(this.summary, weatherObj.summary)
-                && Objects.equals(this.icon, weatherObj.icon);
+                && Objects.equals(this.icon, weatherObj.icon)
+                && Objects.equals(this.dayAsString, weatherObj.dayAsString);
     }
 }

@@ -25,7 +25,7 @@ public class WeatherController {
         return weatherService.getWeather();
     }
 
-    @MessageMapping("/connectSocket")
+    @MessageMapping("/weather-message")
     @SendTo("/topic/weather")
     public WeatherResponse weather() {
         return weatherService.getWeather();

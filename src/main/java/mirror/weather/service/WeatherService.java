@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 public class WeatherService extends AbstractMirrorService {
 
     public final static String HOUR_FORMAT = "h a";
+    public static final String DAY_FORMAT = "EEE";
 
     private final WeatherClient weatherClient;
     private final WeatherResponseConverter<ApiWeatherResponse> weatherResponseConverter;
@@ -18,7 +19,6 @@ public class WeatherService extends AbstractMirrorService {
     private final String latLong;
 
     public WeatherService(WeatherClient weatherClient, WeatherResponseConverter<ApiWeatherResponse> weatherResponseConverter, String latLong) {
-        super();
         this.weatherClient = weatherClient;
         this.weatherResponseConverter = weatherResponseConverter;
         this.latLong = latLong;

@@ -1,12 +1,33 @@
 var stompClient;
 
+Vue.component("weather-icon", {
+    props: ['icon_size'],
+    template: '<canvas class="weather-icons" :width="icon_size" :height="icon_size"></canvas>'
+});
+
+var WEATHER_NUM_OF_HOURS_TO_DISPLAY = 5;
+
 var app = new Vue({
   el: '#app',
   data: {
     connected: false,
     weather: {},
-    hourlyWeather: [],
-    stompClient: stompClient
+    currentWeather: {},
+    hourlyWeatherList: [],
+    dailyWeatherList: [],
+    stompClient: stompClient,
+    idToSkyIcon: {
+                    "clear-day": Skycons.CLEAR_DAY,
+                    "clear-night": Skycons.CLEAR_NIGHT,
+                    "partly-cloudy-day": Skycons.PARTLY_CLOUDY_DAY,
+                    "partly-cloudy-night": Skycons.PARTLY_CLOUDY_NIGHT,
+                    "cloudy": Skycons.CLOUDY,
+                    "rain": Skycons.RAIN,
+                    "sleet": Skycons.SLEET,
+                    "snow": Skycons.SNOW,
+                    "wind": Skycons.WIND,
+                    "fog": Skycons.FOG
+    }
   },
   methods: {
     setConnected: function(connected) {
@@ -20,8 +41,18 @@ var app = new Vue({
             console.log('WebSocket connected: ' + frame);
             stompClient.subscribe('/topic/weather', function (weatherResponse) {
                 app.weather = JSON.parse(weatherResponse.body);
-                app.hourlyWeather = app.weather.hourlyWeatherList.splice(1, 7);
+                app.currentWeather = app.weather.currentWeather;
+                app.hourlyWeatherList = app.weather.hourlyWeatherList.splice(1, WEATHER_NUM_OF_HOURS_TO_DISPLAY);
+                app.dailyWeatherList = app.weather.dailyWeatherList;
+                setTimeout(function () {
+                    app.resetWeatherIcons();
+                }, 100);
             });
+            stompClient.subscribe('/topic/weather/hidden', function (visibilityResponse) {
+                visibility = JSON.parse(visibilityResponse.body);
+                $("#weather-div").attr("hidden", visibility.hidden)
+            })
+            app.askForWeather();
         });
     },
     disconnect: function() {
@@ -30,26 +61,24 @@ var app = new Vue({
         }
         this.setConnected(false);
         console.log("WebSocket disconnected");
+    },
+    resetWeatherIcons: function() {
+        var currentIconId;
+        $(".weather-icons").delay(10).each(function(idx) {
+            currentIconId = $(this).attr("id");
+            app.setIcon(currentIconId);
+        });
+    },
+    setIcon: function(iconId) {
+        var realId = iconId.substring(2).replace(/[0-9]/g, '');
+        icons.set(iconId, this.idToSkyIcon[realId]);
+    },
+    askForWeather: function() {
+        stompClient.send("/mirror/weather-message", {}, {})
     }
   }
 });
 
-Vue.component("sleet", {
-    props: ['icon-name'],
-    template: '<canvas id="icon-name" width="64" height="64"></canvas>'
-});
-
-var icons = new Skycons({"color": "orange"});
-icons.set("clear-day", Skycons.CLEAR_DAY);
-icons.set("clear-night", Skycons.CLEAR_NIGHT);
-icons.set("partly-cloudy-day", Skycons.PARTLY_CLOUDY_DAY);
-icons.set("partly-cloudy-night", Skycons.PARTLY_CLOUDY_NIGHT);
-icons.set("cloudy", Skycons.CLOUDY);
-icons.set("rain", Skycons.RAIN);
-icons.set("sleet", Skycons.SLEET);
-icons.set("snow", Skycons.SNOW);
-icons.set("wind", Skycons.WIND);
-icons.set("fog", Skycons.FOG);
+var icons = new Skycons({"color": "white"});
 icons.play();
-
 app.connect();
