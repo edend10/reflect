@@ -19,7 +19,7 @@
             <div id="weather-div" class="container-fluid">
                 <div class="row">
                     <div class="col-sm-2"></div>
-                    <div class="col-sm-8">
+                    <div class="col-sm-8 text-center">
                         <table class="table text-center" id="hourly-weather-table">
                             <tbody>
                                 <tr><td colspan="3"><div v-if="weather.currentWeather">{{ weather.currentWeather.summary }}</div></td></tr>
@@ -59,11 +59,18 @@
             </div>
         </div>
         <div class="col-md-6">
-
+            <div id="bathroom-div" class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-4 text-center"><img class="bathroom-icon" :src="'images/' + bathroomState + '.png'"/></div>
+                    <div class="col-sm-4 text-center"><button v-on:click="bathroomSignalUrgent" class="bathroom-icon bathroom-urgent-button"></button></div>
+                    <div class="col-sm-2"></div>
+                </div>
+            </div>
         </div>
     </div>
-    <script src="https://rawgithub.com/darkskyapp/skycons/master/skycons.js"></script>
-    <script src="/vueController.js"></script>
 </div>
+<script src="https://rawgithub.com/darkskyapp/skycons/master/skycons.js"></script>
+<script src="/vueController.js"></script>
 </body>
 </html>

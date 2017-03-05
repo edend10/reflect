@@ -15,6 +15,7 @@ var app = new Vue({
     currentWeather: {},
     hourlyWeatherList: [],
     dailyWeatherList: [],
+    bathroomState: "NA",
     stompClient: stompClient,
     idToSkyIcon: {
                     "clear-day": Skycons.CLEAR_DAY,
@@ -39,7 +40,7 @@ var app = new Vue({
         stompClient.connect({}, function (frame) {
             app.setConnected(true);
             console.log('WebSocket connected: ' + frame);
-            stompClient.subscribe('/topic/weather', function (weatherResponse) {
+            stompClient.subscribe('/topic/weather/get', function (weatherResponse) {
                 app.weather = JSON.parse(weatherResponse.body);
                 app.currentWeather = app.weather.currentWeather;
                 app.hourlyWeatherList = app.weather.hourlyWeatherList.splice(1, WEATHER_NUM_OF_HOURS_TO_DISPLAY);
@@ -51,8 +52,15 @@ var app = new Vue({
             stompClient.subscribe('/topic/weather/hidden', function (visibilityResponse) {
                 visibility = JSON.parse(visibilityResponse.body);
                 $("#weather-div").attr("hidden", visibility.hidden)
-            })
+            });
+            stompClient.subscribe('/topic/bathroom/get', function (bathroomResponse) {
+                            app.bathroomState = JSON.parse(bathroomResponse.body).state;
+                            setTimeout(function () {
+                                app.resetWeatherIcons();
+                            }, 100);
+            });
             app.askForWeather();
+            app.askForBathroomState();
         });
     },
     disconnect: function() {
@@ -75,6 +83,16 @@ var app = new Vue({
     },
     askForWeather: function() {
         stompClient.send("/mirror/weather-message", {}, {})
+    },
+    askForBathroomState: function() {
+       stompClient.send("/mirror/bathroom-message", {}, {})
+    },
+    bathroomSignalUrgent: function(event) {
+        if (event) {
+            $.get("/bathroom/signal-urgent", function(data) {
+
+            });
+        }
     }
   }
 });

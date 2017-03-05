@@ -26,7 +26,7 @@ public class WeatherController {
     }
 
     @MessageMapping("/weather-message")
-    @SendTo("/topic/weather")
+    @SendTo("/topic/weather/get")
     public WeatherResponse weather() {
         return weatherService.getWeather();
     }

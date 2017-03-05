@@ -25,7 +25,7 @@ public class WeatherService extends AbstractMirrorService {
     }
 
     public WeatherResponse getWeather() {
-        LOGGER.info("Getting weather for latlong");
+        LOGGER.info("Getting weather");
         ApiWeatherResponse apiWeatherResponse = weatherClient.getForecastForLatLong(latLong);
         WeatherResponse weatherResponse = weatherResponseConverter.toWeatherResponse(apiWeatherResponse);
         return weatherResponse;

@@ -20,12 +20,10 @@ public class DarkSkyWeatherClientImpl implements WeatherClient {
     private static final String URL_PATTERN = "%s/%s/%s/%s?%s";
 
     private final RestTemplate restTemplate;
-    private final ObjectMapper mapper;
     private final String apiKey;
 
-    public DarkSkyWeatherClientImpl(RestTemplate restTemplate, ObjectMapper mapper, String apiKey) {
+    public DarkSkyWeatherClientImpl(RestTemplate restTemplate, String apiKey) {
         this.restTemplate = restTemplate;
-        this.mapper = mapper;
         this.apiKey = apiKey;
     }
 

@@ -58,6 +58,10 @@ public abstract class AbstractMirrorModule {
         webSocketMessenger.convertAndSend(endpoint, supplier.get());
     }
 
+    public void sendMessage(SimpMessagingTemplate webSocketMessenger, String endpoint, Object payload) {
+        webSocketMessenger.convertAndSend(endpoint, payload);
+    }
+
     public String getEndpoint(String... endpoints) {
         return String.format("/%s/%s/%s", TOPIC_ENDPOINT, getBaseEndpoint(),
                 Arrays.asList(endpoints).stream().collect(Collectors.joining("/")));

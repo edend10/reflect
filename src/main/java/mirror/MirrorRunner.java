@@ -5,6 +5,7 @@ import mirror.modules.ModulesRunner;
 import mirror.modules.config.ModuleConfig;
 import mirror.speech.SpeechRecognizer;
 import mirror.speech.SphinxSpeechRecognizerImpl;
+import mirror.tasks.TasksService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;

@@ -40,18 +40,13 @@ public class WeatherConfig {
     }
 
     @Bean
-    public WeatherClient weatherClient(RestTemplate restTemplate, ObjectMapper objectMapper) {
-        return new DarkSkyWeatherClientImpl(restTemplate, objectMapper, weatherApiKey);
+    public WeatherClient weatherClient(RestTemplate restTemplate) {
+        return new DarkSkyWeatherClientImpl(restTemplate, weatherApiKey);
     }
 
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
-    }
-
-    @Bean
-    public ObjectMapper objectMapper() {
-        return new ObjectMapper();
     }
 
     @Bean
