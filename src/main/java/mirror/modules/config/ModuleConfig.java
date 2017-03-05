@@ -62,11 +62,6 @@ public class ModuleConfig {
     }
 
     @Bean
-    public TasksModule tasksModule(TasksService tasksService) {
-        return new TasksModule(tasksService, tasksEndpoint, TimeUnit.SECONDS.toMillis(tasksIntervalSeconds));
-    }
-
-    @Bean
     public BathroomModule bathroomModule(BathroomService bathroomService) {
         return new BathroomModule(bathroomService, bathroomEndpoint, TimeUnit.SECONDS.toMillis(bathroomIntervalSeconds));
     }
