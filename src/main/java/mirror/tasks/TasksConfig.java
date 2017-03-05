@@ -4,7 +4,7 @@ import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@SpringBootConfiguration
+//@SpringBootConfiguration
 public class TasksConfig {
 
     @Bean
