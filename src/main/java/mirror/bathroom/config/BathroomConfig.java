@@ -1,11 +1,8 @@
 package mirror.bathroom.config;
 
-import mirror.bathroom.client.generic.LightBulbClient;
 import mirror.bathroom.client.lifx.LifxLightBulbClient;
-import mirror.bathroom.model.lifx.LifxLightBulbResponse;
 import mirror.bathroom.rest.BathroomController;
 import mirror.bathroom.service.BathroomService;
-import mirror.bathroom.service.generic.BathroomResponseConverter;
 import mirror.bathroom.service.lifx.LifxBathroomResponseConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringBootConfiguration;

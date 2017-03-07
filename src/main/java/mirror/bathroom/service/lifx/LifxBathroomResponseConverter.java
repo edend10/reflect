@@ -7,7 +7,11 @@ import mirror.bathroom.service.generic.BathroomResponseConverter;
 public class LifxBathroomResponseConverter implements BathroomResponseConverter<LifxLightBulbResponse> {
     @Override
     public BathroomResponse convertResponse(LifxLightBulbResponse lifxResponse) {
-        String state = lifxResponse.getConnected().equals("true") ? "occupied" : "vacant";
-        return new BathroomResponse(state);
+        try {
+            String state = lifxResponse.getResults().get(0).getStatus().equals("ok") ? "occupied" : "vacant";
+            return new BathroomResponse(state);
+        } catch (Exception e) {
+            return new BathroomResponse("NA");
+        }
     }
 }
