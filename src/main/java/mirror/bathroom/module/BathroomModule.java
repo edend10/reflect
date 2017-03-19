@@ -36,6 +36,7 @@ public class BathroomModule extends AbstractMirrorModule {
                     if (!currentState.equals(retainedBathroomState)) {
                         sendMessage(webSocketMessenger, getEndpoint(GET_BATHROOM_ENDPOINT), response);
                         retainedBathroomState = currentState;
+                        service.alertIfRegistered(currentState);
                     }
                 } catch (Exception e) {
                     retainedBathroomState = "NA";

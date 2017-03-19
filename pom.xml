@@ -54,6 +54,7 @@
         <webjars-locator.version>0.30</webjars-locator.version>
         <google-collections.version>1.0</google-collections.version>
         <google-apis.version>1.22.0</google-apis.version>
+        <telegrambots.version>2.4.4.5</telegrambots.version>
     </properties>
 
     <dependencies>
@@ -108,14 +109,15 @@
             <version>5prealpha-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>com.google.collections</groupId>
-            <artifactId>google-collections</artifactId>
-            <version>${google-collections.version}</version>
-        </dependency>
-        <dependency>
             <groupId>com.google.api-client</groupId>
             <artifactId>google-api-client</artifactId>
             <version>${google-apis.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava-jdk5</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.google.apis</groupId>
@@ -132,6 +134,11 @@
                     <artifactId>servlet-api</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.telegram</groupId>
+            <artifactId>telegrambots</artifactId>
+            <version>${telegrambots.version}</version>
         </dependency>
     </dependencies>
 

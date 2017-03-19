@@ -4,6 +4,7 @@ import mirror.bathroom.client.lifx.LifxLightBulbClient;
 import mirror.bathroom.rest.BathroomController;
 import mirror.bathroom.service.BathroomService;
 import mirror.bathroom.service.lifx.LifxBathroomResponseConverter;
+import mirror.telegram.service.TelegramBotService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -23,8 +24,8 @@ public class BathroomConfig {
     }
 
     @Bean
-    public BathroomService bathroomService(LifxLightBulbClient client, LifxBathroomResponseConverter converter) {
-        return new BathroomService(client, converter);
+    public BathroomService bathroomService(LifxLightBulbClient client, LifxBathroomResponseConverter converter, TelegramBotService botService) {
+        return new BathroomService(client, converter, botService);
     }
 
     @Bean
