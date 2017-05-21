@@ -24,7 +24,7 @@ public class TelegramBotService {
         this.bathroomBot = new TelegramBathroomBuddyBot(bathroomBotApiKey, bathroomBotUsername);
         List<TelegramLongPollingBot> bots = Arrays.asList(bathroomBot);
         botsApi = new TelegramBotsApi();
-        registerBots(bots);
+//        registerBots(bots);
     }
 
     private void registerBots(List<TelegramLongPollingBot> bots) {
