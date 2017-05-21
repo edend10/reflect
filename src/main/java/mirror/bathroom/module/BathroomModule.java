@@ -1,6 +1,6 @@
 package mirror.bathroom.module;
 
-import mirror.bathroom.dao.BathroomSitting;
+import mirror.bathroom.dao.BathroomSittingDto;
 import mirror.bathroom.model.response.BathroomResponse;
 import mirror.bathroom.service.BathroomService;
 import mirror.modules.generic.AbstractMirrorModule;
@@ -20,13 +20,13 @@ public class BathroomModule extends AbstractMirrorModule {
     private final BathroomService service;
     //TODO: make enum
     private String retainedBathroomState;
-    private BathroomSitting currentSitting;
+    private BathroomSittingDto currentSitting;
 
     public BathroomModule(BathroomService service, String endpoint, long intervalMillis) {
         super(endpoint, intervalMillis);
         this.service = service;
         retainedBathroomState = "NA";
-        currentSitting = new BathroomSitting();
+        currentSitting = new BathroomSittingDto();
     }
 
     @Override
@@ -48,7 +48,7 @@ public class BathroomModule extends AbstractMirrorModule {
                             currentSitting.setEndTime(LocalDateTime.now());
                             if (currentSitting.isComplete()) {
                                 service.saveSitting(currentSitting);
-                                currentSitting = new BathroomSitting();
+                                currentSitting = new BathroomSittingDto();
                             }
                         }
                     }

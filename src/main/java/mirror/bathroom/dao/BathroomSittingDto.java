@@ -2,7 +2,7 @@ package mirror.bathroom.dao;
 
 import java.time.LocalDateTime;
 
-public class BathroomSitting {
+public class BathroomSittingDto {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 

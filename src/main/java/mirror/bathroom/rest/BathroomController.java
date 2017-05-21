@@ -1,5 +1,6 @@
 package mirror.bathroom.rest;
 
+import mirror.bathroom.service.sitting.BathroomSittingStatsResponse;
 import mirror.bathroom.model.response.BathroomResponse;
 import mirror.bathroom.service.BathroomService;
 
@@ -31,10 +32,16 @@ public class BathroomController {
         bathroomService.signalUrgent();
     }
 
+    @RequestMapping(value = "/bathroom/stats/last-week", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public BathroomSittingStatsResponse getSittingStatsLastWeek() {
+        return bathroomService.getSittingStatsLastWeek();
+    }
+
+
     @MessageMapping("/bathroom-message")
     @SendTo("/topic/bathroom/get")
     public BathroomResponse bathroomState() {
         return bathroomService.getBathroomState();
     }
-
 }

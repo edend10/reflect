@@ -1,14 +1,17 @@
 package mirror.bathroom.service;
 
 import mirror.bathroom.client.generic.LightBulbClient;
-import mirror.bathroom.dao.BathroomSitting;
+import mirror.bathroom.dao.BathroomSittingDto;
 import mirror.bathroom.dao.BathroomSittingDao;
-import mirror.bathroom.dao.BathroomSittingDaoImpl;
 import mirror.bathroom.model.response.BathroomResponse;
 import mirror.bathroom.service.generic.BathroomResponseConverter;
+import mirror.bathroom.service.sitting.BathroomSittingStatsResponse;
 import mirror.telegram.service.TelegramBotService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 public class BathroomService {
 
@@ -57,8 +60,16 @@ public class BathroomService {
         registeredForOneOffAlert = true;
     }
 
-    public void saveSitting(BathroomSitting sitting) {
+    public void saveSitting(BathroomSittingDto sitting) {
         LOGGER.info("Logging sitting: {} to {}", sitting.getStartTime(), sitting.getEndTime());
         bathroomSittingDao.insertBathroomSitting(sitting);
+    }
+
+    public BathroomSittingStatsResponse getSittingStatsLastWeek() {
+        LocalDateTime endTime = LocalDateTime.now().toLocalDate().atStartOfDay();
+        LocalDateTime startTime = endTime.minusDays(7);
+        List<BathroomSittingDto> sittings = bathroomSittingDao.getSittingsInRange(startTime, endTime);
+
+        return new BathroomSittingStatsResponse(sittings);
     }
 }
